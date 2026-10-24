@@ -1,0 +1,95 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 600,
+  "height": 360,
+  "title": "Running/Jogging Participation Rate: Female vs Male by State",
+
+  "data": {
+    "url": "../data/running-jogging_event by gender.csv",
+    "format": {"type": "csv"}
+  },
+
+  "transform": [
+    {
+      "calculate": "toNumber(datum['Participation Rate (%)'])",
+      "as": "Rate"
+    },
+    {
+      "pivot": "Gender",
+      "value": "Rate",
+      "groupby": ["State"]
+    },
+    {
+      "calculate": "abs(datum.Male - datum.Female)",
+      "as": "Gap"
+    }
+  ],
+
+  "layer": [
+    {
+      "mark": {"type": "rule", "color": "#9AA5B1", "strokeWidth": 3},
+      "encoding": {
+        "y": {
+          "field": "State",
+          "type": "nominal",
+          "title": "State",
+          "sort": {"field": "Gap", "order": "descending"},
+          "axis": {"labelFontSize": 12}
+        },
+        "x": {
+          "field": "Female",
+          "type": "quantitative",
+          "title": "Participation rate (%)",
+          "scale": {"domain": [3, 9], "zero": false}
+        },
+        "x2": {"field": "Male"},
+        "tooltip": [
+          {"field": "State", "type": "nominal", "title": "State"},
+          {"field": "Female", "type": "quantitative", "title": "Female (%)", "format": ".1f"},
+          {"field": "Male", "type": "quantitative", "title": "Male (%)", "format": ".1f"},
+          {"field": "Gap", "type": "quantitative", "title": "Gap (percentage points)", "format": ".1f"}
+        ]
+      }
+    },
+
+    {
+      "transform": [
+        {"fold": ["Female", "Male"], "as": ["Gender", "Rate"]}
+      ],
+      "mark": {
+        "type": "circle",
+        "size": 160,
+        "opacity": 1,
+        "stroke": "white",
+        "strokeWidth": 1
+      },
+      "encoding": {
+        "y": {
+          "field": "State",
+          "type": "nominal",
+          "sort": {"field": "Gap", "order": "descending"}
+        },
+        "x": {
+          "field": "Rate",
+          "type": "quantitative",
+          "scale": {"domain": [3, 9], "zero": false}
+        },
+        "color": {
+          "field": "Gender",
+          "type": "nominal",
+          "title": "Gender",
+          "scale": {
+            "domain": ["Female", "Male"],
+            "range": ["#E4572E", "#2B6CB0"]
+          }
+        },
+        "tooltip": [
+          {"field": "State", "type": "nominal", "title": "State"},
+          {"field": "Gender", "type": "nominal", "title": "Gender"},
+          {"field": "Rate", "type": "quantitative", "title": "Participation rate (%)", "format": ".1f"},
+          {"field": "Gap", "type": "quantitative", "title": "Gap (percentage points)", "format": ".1f"}
+        ]
+      }
+    }
+  ]
+}

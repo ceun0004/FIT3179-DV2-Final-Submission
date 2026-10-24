@@ -1,0 +1,147 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 560,
+  "height": 560,
+  "title": "Participation Rate by Sport and Age Group",
+
+  "params": [
+    {
+      "name": "age_filter",
+      "value": "All",
+      "bind": {
+        "input": "select",
+        "name": "Age Group: ",
+        "options": ["All", "15-17", "18-24", "25-34", "35-44", "45-54", "55-64", "65+"]
+      }
+    }
+  ],
+
+  "layer": [
+    {
+      "data": {"sequence": {"start": 0, "stop": 8, "step": 1, "as": "idx"}},
+      "transform": [
+        {"calculate": "[10,20,30,40,50,60,70]", "as": "levels"},
+        {"flatten": ["levels"], "as": ["level"]},
+        {"calculate": "datum.idx * 2 * PI / 8", "as": "angle"},
+        {"calculate": "(datum.level / 70) * sin(datum.angle)", "as": "x"},
+        {"calculate": "(datum.level / 70) * cos(datum.angle)", "as": "y"}
+      ],
+      "mark": {"type": "line", "interpolate": "linear-closed", "stroke": "#999", "strokeWidth": 0.7, "opacity": 0.6},
+      "encoding": {
+        "x": {"field": "x", "type": "quantitative", "scale": {"domain": [-1.4, 1.4]}, "axis": null},
+        "y": {"field": "y", "type": "quantitative", "scale": {"domain": [-1.4, 1.4]}, "axis": null},
+        "detail": {"field": "level", "type": "nominal"},
+        "order": {"field": "idx", "type": "quantitative"}
+      }
+    },
+
+    {
+      "data": {"sequence": {"start": 0, "stop": 8, "step": 1, "as": "idx"}},
+      "transform": [
+        {"calculate": "datum.idx * 2 * PI / 8", "as": "angle"},
+        {"calculate": "0", "as": "x0"},
+        {"calculate": "0", "as": "y0"},
+        {"calculate": "sin(datum.angle)", "as": "x1"},
+        {"calculate": "cos(datum.angle)", "as": "y1"}
+      ],
+      "mark": {"type": "rule", "stroke": "#999", "strokeWidth": 0.7, "opacity": 0.6},
+      "encoding": {
+        "x": {"field": "x0", "type": "quantitative", "scale": {"domain": [-1.4, 1.4]}, "axis": null},
+        "y": {"field": "y0", "type": "quantitative", "scale": {"domain": [-1.4, 1.4]}, "axis": null},
+        "x2": {"field": "x1"},
+        "y2": {"field": "y1"}
+      }
+    },
+
+    {
+      "data": {"sequence": {"start": 0, "stop": 8, "step": 1, "as": "idx"}},
+      "transform": [
+        {"calculate": "['Run/Jogging','Swimming','Gym/Fitness','Cycling','Basketball','Golf','Tennis','Walking'][datum.idx]", "as": "label"},
+        {"calculate": "1.15 * sin(datum.idx * 2 * PI / 8)", "as": "x"},
+        {"calculate": "1.15 * cos(datum.idx * 2 * PI / 8)", "as": "y"}
+      ],
+      "mark": {"type": "text", "fontSize": 12, "fontWeight": "bold", "color": "#222"},
+      "encoding": {
+        "x": {"field": "x", "type": "quantitative", "scale": {"domain": [-1.4, 1.4]}, "axis": null},
+        "y": {"field": "y", "type": "quantitative", "scale": {"domain": [-1.4, 1.4]}, "axis": null},
+        "text": {"field": "label", "type": "nominal"}
+      }
+    },
+
+    {
+      "data": {"values": [
+        {"level": 10}, {"level": 20}, {"level": 30}, {"level": 40},
+        {"level": 50}, {"level": 60}, {"level": 70}
+      ]},
+      "transform": [
+        {"calculate": "0", "as": "x"},
+        {"calculate": "datum.level / 70", "as": "y"},
+        {"calculate": "datum.level + '%'", "as": "label"}
+      ],
+      "mark": {"type": "text", "fontSize": 9, "color": "#666", "dx": 12, "dy": -4},
+      "encoding": {
+        "x": {"field": "x", "type": "quantitative", "scale": {"domain": [-1.4, 1.4]}, "axis": null},
+        "y": {"field": "y", "type": "quantitative", "scale": {"domain": [-1.4, 1.4]}, "axis": null},
+        "text": {"field": "label", "type": "nominal"}
+      }
+    },
+
+    {
+      "data": {"url": "../data/top_8_sports.csv", "format": {"type": "csv"}},
+      "transform": [
+        {
+          "filter": "age_filter === 'All' || datum['Age Group'] === age_filter"
+        },
+        {"calculate": "toNumber(replace(datum['Participation Rate'], '%', ''))", "as": "Rate"},
+        {"calculate": "indexof(['Run/Jogging','Swimming','Gym/Fitness','Cycling','Basketball','Golf','Tennis','Walking'], datum.Activity)", "as": "idx"},
+        {"calculate": "datum.idx * 2 * PI / 8", "as": "angle"},
+        {"calculate": "(datum.Rate / 70) * sin(datum.angle)", "as": "x"},
+        {"calculate": "(datum.Rate / 70) * cos(datum.angle)", "as": "y"}
+      ],
+      "layer": [
+        {
+          "mark": {"type": "line", "interpolate": "linear-closed", "strokeWidth": 2.5, "opacity": 0.85},
+          "encoding": {
+            "x": {"field": "x", "type": "quantitative", "scale": {"domain": [-1.4, 1.4]}, "axis": null},
+            "y": {"field": "y", "type": "quantitative", "scale": {"domain": [-1.4, 1.4]}, "axis": null},
+            "order": {"field": "idx", "type": "quantitative"},
+            "color": {
+              "field": "Age Group",
+              "type": "nominal",
+              "title": "Age Group",
+              "scale": {
+                "domain": ["15-17", "18-24", "25-34", "35-44", "45-54", "55-64", "65+"],
+                "range": ["#0072B2", "#E69F00", "#56B4E9", "#CC79A7", "#6A3D9A", "#000000", "#999999"]
+              }
+            }
+          }
+        },
+        {
+          "mark": {"type": "point", "filled": true, "size": 50, "opacity": 1},
+          "encoding": {
+            "x": {"field": "x", "type": "quantitative", "scale": {"domain": [-1.4, 1.4]}, "axis": null},
+            "y": {"field": "y", "type": "quantitative", "scale": {"domain": [-1.4, 1.4]}, "axis": null},
+            "color": {
+              "field": "Age Group",
+              "type": "nominal",
+              "scale": {
+                "domain": ["15-17", "18-24", "25-34", "35-44", "45-54", "55-64", "65+"],
+                "range": ["#0072B2", "#E69F00", "#56B4E9", "#CC79A7", "#6A3D9A", "#000000", "#999999"]
+              },
+              "legend": null
+            },
+            "tooltip": [
+              {"field": "Age Group", "type": "nominal", "title": "Age Group"},
+              {"field": "Activity", "type": "nominal", "title": "Activity"},
+              {"field": "Participation Rate", "type": "nominal", "title": "Participation Rate"}
+            ]
+          }
+        }
+      ]
+    }
+  ],
+
+  "config": {
+    "view": {"stroke": null}
+  }
+}

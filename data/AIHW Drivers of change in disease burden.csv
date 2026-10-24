@@ -1,0 +1,72 @@
+Disease group,Disease/Injury,Sex,Type of burden, Burden 2003,Burden 2018,Amount of change,Per cent change
+Cardiovascular diseases,Atrial fibrillation and flutter,Females,DALY,"14,294","27,184","12,890",90.2
+Cardiovascular diseases,Cardiomyopathy,Females,DALY,"5,979","8,086","2,107",35.2
+Cardiovascular diseases,Coronary heart disease,Females,DALY,"158,271","104,071","-54,200",-34.2
+Cardiovascular diseases,Non-rheumatic valvular disease,Females,DALY,"12,183","14,310","2,127",17.5
+Cardiovascular diseases,Stroke,Females,DALY,"78,390","62,858","-15,532",-19.8
+Cardiovascular diseases,Atrial fibrillation and flutter,Males,DALY,"15,571","31,338","15,767",101.3
+Cardiovascular diseases,Cardiomyopathy,Males,DALY,"15,355","17,416","2,061",13.4
+Cardiovascular diseases,Coronary heart disease,Males,DALY,"265,514","207,974","-57,540",-21.7
+Cardiovascular diseases,Non-rheumatic valvular disease,Males,DALY,"12,123","15,558","3,435",28.3
+Cardiovascular diseases,Stroke,Males,DALY,"71,299","62,148","-9,152",-12.8
+Mental health conditions and substance use disorders,Anxiety disorders,Females,DALY,"75,838","94,709","18,871",24.9
+Mental health conditions and substance use disorders,Autism spectrum disorders,Females,DALY,"4,044","9,112","5,068",125.3
+Mental health conditions and substance use disorders,Bipolar affective disorder,Females,DALY,"18,784","23,393","4,609",24.5
+Mental health conditions and substance use disorders,Depressive disorders,Females,DALY,"65,497","82,453","16,956",25.9
+Mental health conditions and substance use disorders,Drug use disorders (excluding alcohol),Females,DALY,"10,543","15,859","5,316",50.4
+Mental health conditions and substance use disorders,Eating disorders,Females,DALY,"22,322","30,537","8,214",36.8
+Mental health conditions and substance use disorders,Schizophrenia,Females,DALY,"9,726","12,730","3,005",30.9
+Mental health conditions and substance use disorders,Anxiety disorders,Males,DALY,"50,349","62,028","11,680",23.2
+Mental health conditions and substance use disorders,Autism spectrum disorders,Males,DALY,"17,035","33,857","16,822",98.8
+Mental health conditions and substance use disorders,Bipolar affective disorder,Males,DALY,"15,629","18,869","3,240",20.7
+Mental health conditions and substance use disorders,Depressive disorders,Males,DALY,"49,060","60,347","11,287",23.0
+Mental health conditions and substance use disorders,Drug use disorders (excluding alcohol),Males,DALY,"22,799","31,525","8,726",38.3
+Mental health conditions and substance use disorders,Eating disorders,Males,DALY,"8,290","11,168","2,878",34.7
+Mental health conditions and substance use disorders,Schizophrenia,Males,DALY,"19,515","24,680","5,165",26.5
+Cancer and other neoplasms,Bowel cancer,Females,DALY,"42,067","42,598",531,1.3
+Cancer and other neoplasms,Brain and central nervous system cancer,Females,DALY,"14,056","16,147","2,091",14.9
+Cancer and other neoplasms,Breast cancer,Females,DALY,"70,084","70,508",423,0.6
+Cancer and other neoplasms,Cancer of unknown primary site,Females,DALY,"13,177","11,597","-1,580",-12.0
+Cancer and other neoplasms,Liver cancer,Females,DALY,"5,490","12,289","6,799",123.8
+Cancer and other neoplasms,Lung cancer,Females,DALY,"49,473","67,608","18,135",36.7
+Cancer and other neoplasms,Melanoma of the skin,Females,DALY,"9,564","9,750",186,1.9
+Cancer and other neoplasms,Non-Hodgkin lymphoma,Females,DALY,"12,142","10,225","-1,917",-15.8
+Cancer and other neoplasms,Oesophageal cancer,Females,DALY,"5,962","5,234",-728,-12.2
+Cancer and other neoplasms,Pancreatic cancer,Females,DALY,"16,092","24,002","7,910",49.2
+Cancer and other neoplasms,Prostate cancer,Females,DALY,0,0,0,0.0
+Cancer and other neoplasms,Stomach cancer,Females,DALY,"8,812","7,557","-1,255",-14.2
+Cancer and other neoplasms,Bowel cancer,Males,DALY,"55,341","55,005",-336,-0.6
+Cancer and other neoplasms,Brain and central nervous system cancer,Males,DALY,"19,959","24,180","4,221",21.1
+Cancer and other neoplasms,Breast cancer,Males,DALY,280,740,460,164.1
+Cancer and other neoplasms,Cancer of unknown primary site,Males,DALY,"15,580","14,363","-1,217",-7.8
+Cancer and other neoplasms,Liver cancer,Males,DALY,"13,564","28,541","14,977",110.4
+Cancer and other neoplasms,Lung cancer,Males,DALY,"88,306","92,115","3,809",4.3
+Cancer and other neoplasms,Melanoma of the skin,Males,DALY,"18,559","19,039",479,2.6
+Cancer and other neoplasms,Non-Hodgkin lymphoma,Males,DALY,"17,239","15,323","-1,917",-11.1
+Cancer and other neoplasms,Oesophageal cancer,Males,DALY,"16,085","19,302","3,217",20.0
+Cancer and other neoplasms,Pancreatic cancer,Males,DALY,"19,242","29,158","9,916",51.5
+Cancer and other neoplasms,Prostate cancer,Males,DALY,"44,996","51,305","6,309",14.0
+Cancer and other neoplasms,Stomach cancer,Males,DALY,"14,149","14,239",90,0.6
+Respiratory diseases,All,Females,DALY,"143,773","191,283","47,510",33.0
+Respiratory diseases,Asthma,Males,DALY,"42,048","58,799","16,752",39.8
+Respiratory diseases,COPD,Males,DALY,"64,647","83,586","18,939",29.3
+Neurological conditions,Dementia,Females,DALY,"61,565","122,610","61,045",99.2
+Neurological conditions,Epilepsy,Females,DALY,"20,406","20,575",168,0.8
+Neurological conditions,Migraine,Females,DALY,"27,792","33,246","5,454",19.6
+Neurological conditions,Parkinson disease,Females,DALY,"9,759","14,991","5,232",53.6
+Neurological conditions,Dementia,Males,DALY,"31,323","75,345","44,022",140.5
+Neurological conditions,Epilepsy,Males,DALY,"21,691","23,809","2,118",9.8
+Neurological conditions,Migraine,Males,DALY,"11,491","13,198","1,707",14.9
+Neurological conditions,Parkinson disease,Males,DALY,"9,418","18,397","8,980",95.3
+Musculoskeletal conditions,Back pain and problems,Females,DALY,"75,632","110,889","35,256",46.6
+Musculoskeletal conditions,Osteoarthritis,Females,DALY,"43,950","76,437","32,486",73.9
+Musculoskeletal conditions,Rheumatoid arthritis,Females,DALY,"65,116","64,038","-1,078",-1.7
+Musculoskeletal conditions,Back pain and problems,Males,DALY,"82,528","111,468","28,940",35.1
+Musculoskeletal conditions,Osteoarthritis,Males,DALY,"26,941","43,552","16,611",61.7
+Musculoskeletal conditions,Rheumatoid arthritis,Males,DALY,"47,852","42,265","-5,587",-11.7
+Oral disorders,Dental caries,Females,DALY,"15,478","22,920","7,442",48.1
+Oral disorders,Periodontal disease,Females,DALY,"9,161","18,421","9,260",101.1
+Oral disorders,Severe tooth loss,Females,DALY,"16,884","15,221","-1,663",-9.8
+Oral disorders,Dental caries,Males,DALY,"18,487","26,067","7,581",41.0
+Oral disorders,Periodontal disease,Males,DALY,"13,198","23,623","10,425",79.0
+Oral disorders,Severe tooth loss,Males,DALY,"11,823","12,119",296,2.5

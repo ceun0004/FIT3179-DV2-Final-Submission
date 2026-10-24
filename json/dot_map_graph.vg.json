@@ -1,0 +1,93 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
+  "width": 800,
+  "height": 450,
+
+  "background": "#CFE8F3",
+
+  "projection": {
+    "type": "mercator"
+  },
+
+  "params": [
+    {
+      "name": "category_filter",
+      "value": "All",
+      "bind": {
+        "input": "select",
+        "name": "Activity Category: ",
+        "options": [
+          "All",
+          "running/jogging",
+          "arts & culture",
+          "family & children",
+          "festivals & community",
+          "outdoor & recreation",
+          "others"
+        ]
+      }
+    }
+  ],
+
+  "layer": [
+
+    {
+      "data": {
+        "url": "../topojson/suburb-boundaries.topojson",
+        "format": {
+          "type": "topojson",
+          "feature": "suburb-boundaries"
+        }
+      },
+
+      "mark": {
+        "type": "geoshape",
+        "fill": "#E8E2D2",
+        "stroke": "white",
+        "strokeWidth": 1
+      }
+    },
+
+    {
+      "data": {
+        "url": "../data/brisbane-city-council-events-categorized.csv"
+      },
+
+      "transform": [
+        {
+          "calculate": "parseFloat(trim(split(datum.geolocation, ',')[0]))",
+          "as": "latitude"
+        },
+        {
+          "calculate": "parseFloat(trim(split(datum.geolocation, ',')[1]))",
+          "as": "longitude"
+        },
+        {
+          "filter": "isValid(datum.latitude) && isValid(datum.longitude)"
+        },
+        {
+          "filter": "category_filter === 'All' || lower(trim(datum['activity category'])) === category_filter"
+        }
+      ],
+
+      "mark": {
+        "type": "circle",
+        "size": 50,
+        "color": "red"
+      },
+
+      "encoding": {
+        "longitude": {
+          "field": "longitude",
+          "type": "quantitative"
+        },
+
+        "latitude": {
+          "field": "latitude",
+          "type": "quantitative"
+        }
+      }
+    }
+  ]
+}

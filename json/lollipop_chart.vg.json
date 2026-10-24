@@ -1,0 +1,98 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 600,
+  "height": 360,
+  "title": "Charity Event Revenue by State",
+
+  "data": {
+    "url": "../data/Charity_Revenue.csv",
+    "format": {"type": "csv"}
+  },
+
+  "transform": [
+    {
+      "calculate": "toNumber(replace(trim(datum.Revenue), /[$,\\s]/g, ''))",
+      "as": "RevenueValue"
+    },
+    {
+      "joinaggregate": [
+        {"op": "max", "field": "RevenueValue", "as": "maxRev"},
+        {"op": "min", "field": "RevenueValue", "as": "minRev"}
+      ]
+    },
+    {
+      "calculate": "datum.RevenueValue === datum.maxRev ? 'Highest' : datum.RevenueValue === datum.minRev ? 'Lowest' : 'Other states'",
+      "as": "Status"
+    }
+  ],
+
+  "encoding": {
+    "y": {
+      "field": "State",
+      "type": "nominal",
+      "title": "State",
+      "sort": {"field": "RevenueValue", "order": "descending"},
+      "axis": {"labelFontSize": 12}
+    }
+  },
+
+  "layer": [
+    {
+      "mark": {"type": "rule", "strokeWidth": 3},
+      "encoding": {
+        "x": {
+          "field": "RevenueValue",
+          "type": "quantitative",
+          "title": "Revenue (AUD)",
+          "scale": {"domain": [0, 600000000]},
+          "axis": {"format": "$.2s"}
+        },
+        "x2": {"datum": 0},
+        "color": {
+          "field": "Status",
+          "type": "nominal",
+          "legend": null,
+          "scale": {
+            "domain": ["Highest", "Lowest", "Other states"],
+            "range": ["#7E3AF2", "#E53935", "#2B6CB0"]
+          }
+        }
+      }
+    },
+    {
+      "mark": {"type": "circle", "size": 400, "opacity": 1, "stroke": "white", "strokeWidth": 1.5},
+      "encoding": {
+        "x": {
+          "field": "RevenueValue",
+          "type": "quantitative",
+          "scale": {"domain": [0, 600000000]}
+        },
+        "color": {
+          "field": "Status",
+          "type": "nominal",
+          "legend": null,
+          "scale": {
+            "domain": ["Highest", "Lowest", "Other states"],
+            "range": ["#125A41", "#B23A18", "#1D4A7E"]
+          }
+        },
+        "tooltip": [
+          {"field": "State", "type": "nominal", "title": "State"},
+          {"field": "RevenueValue", "type": "quantitative", "title": "Revenue", "format": "$,.0f"},
+          {"field": "Status", "type": "nominal", "title": "Rank"}
+        ]
+      }
+    },
+    {
+      "mark": {"type": "text", "align": "left", "dx": 14, "fontSize": 11, "color": "#374151"},
+      "encoding": {
+        "x": {
+          "field": "RevenueValue",
+          "type": "quantitative",
+          "scale": {"domain": [0, 600000000]}
+        },
+        "text": {"field": "RevenueValue", "type": "quantitative", "format": "$,.0f"}
+      }
+    }
+  ]
+}

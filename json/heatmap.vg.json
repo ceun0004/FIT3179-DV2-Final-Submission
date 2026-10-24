@@ -1,0 +1,81 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
+  "width": 750,
+  "height": 400,
+
+  "background": "#F9F9F9",
+
+  "data": {
+    "url": "../data/Long_term_health_conditions_ABS.csv"
+  },
+
+  "transform": [
+    {
+      "fold": [
+        "Arthritis", 
+        "Asthma", 
+        "Back problems", 
+        "Cancer", 
+        "COPD", 
+        "Diabetes", 
+        "Vascular disease", 
+        "Hypertension", 
+        "Kidney disease", 
+        "Mental Condition", 
+        "Osteoporosis"
+      ],
+      "as": ["Condition", "Percentage_Str"]
+    },
+    {
+      "calculate": "parseFloat(replace(datum.Percentage_Str, '%', ''))",
+      "as": "Percentage"
+    }
+  ],
+
+  "mark": {
+    "type": "rect",
+    "stroke": "white",
+    "strokeWidth": 1
+  },
+
+  "encoding": {
+    "x": {
+      "field": "Condition",
+      "type": "nominal",
+      "axis": {
+        "labelAngle": -40,
+        "title": "Health Condition"
+      }
+    },
+
+    "y": {
+      "field": "State",
+      "type": "nominal",
+      "axis": {
+        "title": "State / Territory"
+      }
+    },
+
+    "color": {
+      "field": "Percentage",
+      "type": "quantitative",
+      "scale": {
+        "scheme": "orangered"
+      },
+      "title": "% Prevalence"
+    },
+
+    "tooltip": [
+      {"field": "State", "type": "nominal", "title": "State"},
+      {"field": "Condition", "type": "nominal", "title": "Condition"},
+      {"field": "Percentage_Str", "type": "nominal", "title": "Prevalence"}
+    ]
+  },
+
+  "config": {
+    "axis": {
+      "domain": false
+    }
+  }
+}

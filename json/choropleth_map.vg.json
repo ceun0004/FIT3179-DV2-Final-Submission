@@ -1,0 +1,149 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 600,
+  "height": 500,
+  "title": "AusPlay Activity Participation by State",
+
+  "projection": {
+    "type": "mercator"
+  },
+
+  "params": [
+    {
+      "name": "age_group",
+      "value": "15-17",
+      "bind": {
+        "input": "select",
+        "name": "Age Group: ",
+        "options": [
+          "15-17", "18-24", "25-34", "35-44",
+          "45-54", "55-64", "65+"
+        ]
+      }
+    }
+  ],
+
+  "layer": [
+    {
+      "data": {
+        "url": "../data/AUSPLAY_activity.csv",
+        "format": {
+          "type": "csv"
+        }
+      },
+
+      "transform": [
+        {
+          "filter": "datum['Age Group'] === age_group"
+        },
+        {
+          "calculate": "toNumber(replace(datum['Participation Rate'], '%', ''))",
+          "as": "Value"
+        },
+        {
+          "lookup": "State",
+          "from": {
+            "data": {
+              "url": "../topojson/australia_states.topojson",
+              "format": {
+                "type": "topojson",
+                "feature": "ne_10m_admin_1_states_provinces"
+              }
+            },
+            "key": "properties.region"
+          },
+          "as": "geo"
+        }
+      ],
+
+      "mark": {
+        "type": "geoshape",
+        "stroke": "white",
+        "strokeWidth": 1
+      },
+
+      "encoding": {
+        "shape": {
+          "field": "geo",
+          "type": "geojson"
+        },
+        "color": {
+          "field": "Value",
+          "type": "quantitative",
+          "title": "Participation Rate (%)",
+          "scale": {
+            "scheme": "blues"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "State",
+            "type": "nominal",
+            "title": "State"
+          },
+          {
+            "field": "Age Group",
+            "type": "nominal",
+            "title": "Age Group"
+          },
+          {
+            "field": "Estimate",
+            "type": "quantitative",
+            "title": "Estimate",
+            "format": ","
+          },
+          {
+            "field": "Participation Rate",
+            "type": "nominal",
+            "title": "Participation Rate"
+          }
+        ]
+      }
+    },
+
+    {
+      "data": {
+        "values": [
+          {"StateLabel": "WA", "Longitude": 121.0, "Latitude": -25.5},
+          {"StateLabel": "NT", "Longitude": 133.5, "Latitude": -19.0},
+          {"StateLabel": "SA", "Longitude": 135.5, "Latitude": -30.0},
+          {"StateLabel": "QLD", "Longitude": 145.5, "Latitude": -24.0},
+          {"StateLabel": "NSW/ACT", "Longitude": 147.0, "Latitude": -32.0},
+          {"StateLabel": "VIC", "Longitude": 144.5, "Latitude": -37},
+          {"StateLabel": "TAS", "Longitude": 146.5, "Latitude": -42.0}
+        ]
+      },
+
+      "mark": {
+        "type": "text",
+        "fontSize": 15,
+        "fontWeight": "bold",
+        "color": "black",
+        "stroke": "white",
+        "strokeWidth": 0.4,
+        "align": "center",
+        "baseline": "middle"
+      },
+
+      "encoding": {
+        "longitude": {
+          "field": "Longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "Latitude",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "StateLabel",
+          "type": "nominal"
+        },
+        "tooltip": {
+          "field": "StateLabel",
+          "type": "nominal",
+          "title": "State"
+        }
+      }
+    }
+  ]
+}

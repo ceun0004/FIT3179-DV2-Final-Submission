@@ -1,0 +1,138 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Charity Run Organisers by State and Season",
+
+  "params": [
+    {
+      "name": "start_year",
+      "value": 2020,
+      "bind": {"input": "range", "min": 2020, "max": 2025, "step": 1, "name": "From year: "}
+    },
+    {
+      "name": "end_year",
+      "value": 2025,
+      "bind": {"input": "range", "min": 2020, "max": 2025, "step": 1, "name": "To year: "}
+    }
+  ],
+
+  "data": {
+    "url": "../data/charity_fun_run_datadotgov_main.csv",
+    "format": {"type": "csv"}
+  },
+
+  "transform": [
+    {
+      "filter": "datum.Registration_Date && datum.State && indexof(['ACT','NSW','NT','QLD','SA','TAS','VIC','WA'], datum.State) >= 0"
+    },
+    {
+      "calculate": "datetime(toNumber(split(datum.Registration_Date, '/')[2]), toNumber(split(datum.Registration_Date, '/')[1]) - 1, toNumber(split(datum.Registration_Date, '/')[0]))",
+      "as": "reg_date"
+    },
+    {
+      "filter": "year(datum.reg_date) >= 2020 && year(datum.reg_date) <= 2025"
+    },
+    {
+      "filter": "year(datum.reg_date) >= start_year && year(datum.reg_date) <= end_year"
+    },
+    {
+      "calculate": "(month(datum.reg_date) === 11 || month(datum.reg_date) <= 1) ? 'Summer (Dec–Feb)' : month(datum.reg_date) <= 4 ? 'Autumn (Mar–May)' : month(datum.reg_date) <= 7 ? 'Winter (Jun–Aug)' : 'Spring (Sep–Nov)'",
+      "as": "Season"
+    },
+    {
+      "aggregate": [{"op": "count", "as": "events"}],
+      "groupby": ["Season", "State"]
+    },
+    {
+      "joinaggregate": [{"op": "max", "field": "events", "as": "max_events"}],
+      "groupby": ["Season"]
+    },
+    {
+      "calculate": "datum.Season + '|' + (datum.events === datum.max_events ? 'Highest' : 'Normal')",
+      "as": "ColorKey"
+    },
+    {
+      "calculate": "datum.events === datum.max_events ? 'Yes' : 'No'",
+      "as": "IsHighest"
+    }
+  ],
+
+  "facet": {
+    "field": "Season",
+    "type": "nominal",
+    "title": null,
+    "sort": ["Summer (Dec–Feb)", "Autumn (Mar–May)", "Winter (Jun–Aug)", "Spring (Sep–Nov)"],
+    "header": {"labelFontSize": 14}
+  },
+
+  "columns": 2,
+
+  "spec": {
+    "width": 350,
+    "height": 200,
+
+    "layer": [
+      {
+        "mark": {"type": "bar"},
+        "encoding": {
+          "x": {
+            "field": "State",
+            "type": "nominal",
+            "title": "State",
+            "sort": ["ACT", "NSW", "NT", "QLD", "SA", "TAS", "VIC", "WA"],
+            "scale": {"domain": ["ACT", "NSW", "NT", "QLD", "SA", "TAS", "VIC", "WA"]},
+            "axis": {"labelAngle": 0}
+          },
+          "y": {
+            "field": "events",
+            "type": "quantitative",
+            "title": "Total events"
+          },
+          "color": {
+            "field": "ColorKey",
+            "type": "nominal",
+            "scale": {
+              "domain": [
+                "Summer (Dec–Feb)|Normal",
+                "Summer (Dec–Feb)|Highest",
+                "Autumn (Mar–May)|Normal",
+                "Autumn (Mar–May)|Highest",
+                "Winter (Jun–Aug)|Normal",
+                "Winter (Jun–Aug)|Highest",
+                "Spring (Sep–Nov)|Normal",
+                "Spring (Sep–Nov)|Highest"
+              ],
+              "range": [
+                "#E15759", "#FF9D9A",
+                "#EDC948", "#F7E17A",
+                "#4E79A7", "#7DB8FF",
+                "#D37295", "#F2A2C1"
+              ]
+            },
+            "legend": null
+          },
+          "tooltip": [
+            {"field": "Season", "type": "nominal", "title": "Season"},
+            {"field": "State", "type": "nominal", "title": "State"},
+            {"field": "events", "type": "quantitative", "title": "Total events"},
+            {"field": "IsHighest", "type": "nominal", "title": "Highest in season"}
+          ]
+        }
+      },
+      {
+        "mark": {"type": "text", "dy": -6, "fontSize": 10},
+        "encoding": {
+          "x": {
+            "field": "State",
+            "type": "nominal",
+            "sort": ["ACT", "NSW", "NT", "QLD", "SA", "TAS", "VIC", "WA"],
+            "scale": {"domain": ["ACT", "NSW", "NT", "QLD", "SA", "TAS", "VIC", "WA"]}
+          },
+          "y": {"field": "events", "type": "quantitative"},
+          "text": {"field": "events", "type": "quantitative"}
+        }
+      }
+    ]
+  },
+
+  "resolve": {"scale": {"y": "shared"}}
+}

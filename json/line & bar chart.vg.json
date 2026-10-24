@@ -1,0 +1,237 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "Charity runs hosted per year (bars) vs selected causes of death (lines), 2023-2024",
+  "width": 560,
+  "height": 400,
+  "padding": 10,
+  "autosize": "pad",
+
+  "title": {
+    "text": "Charity Runs Registered vs Selected Causes of Death (2023-2024)",
+    "anchor": "start",
+    "fontSize": 16
+  },
+
+  "data": [
+    {
+      "name": "charity",
+      "url": "../data/charity_fun_run_datadotgov_main.csv",
+      "format": {"type": "csv"},
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "isValid(datum.Registration_Date) && datum.Registration_Date !== ''"
+        },
+        {
+          "type": "formula",
+          "expr": "split(datum.Registration_Date, '/')[2]",
+          "as": "year"
+        },
+        {
+          "type": "filter",
+          "expr": "datum.year === '2023' || datum.year === '2024'"
+        },
+        {
+          "type": "aggregate",
+          "groupby": ["year"],
+          "ops": ["count"],
+          "as": ["runs"]
+        }
+      ]
+    },
+
+    {
+      "name": "deaths",
+      "url": "../data/leading causes of death, Australia.csv",
+      "format": {"type": "csv", "parse": {"Deaths": "number", "Rank": "number"}},
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "indexof(['Chronic lower respiratory diseases', 'Diabetes', 'Heart failure and heart disease'], datum.Disease) >= 0"
+        },
+        {
+          "type": "formula",
+          "expr": "toString(datum.Year)",
+          "as": "year"
+        },
+        {
+          "type": "filter",
+          "expr": "datum.year === '2023' || datum.year === '2024'"
+        }
+      ]
+    }
+  ],
+
+  "scales": [
+    {
+      "name": "x",
+      "type": "point",
+      "domain": ["2023", "2024"],
+      "range": "width",
+      "padding": 0.5
+    },
+    {
+      "name": "y",
+      "type": "linear",
+      "domain": {
+        "fields": [
+          {"data": "charity", "field": "runs"},
+          {"data": "deaths", "field": "Deaths"}
+        ]
+      },
+      "domainMin": 0,
+      "range": "height",
+      "nice": true,
+      "zero": true
+    },
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": [
+        "Chronic lower respiratory diseases",
+        "Diabetes",
+        "Heart failure and heart disease"
+      ],
+      "range": ["#E4572E", "#2B6CB0", "#6B46C1"]
+    },
+    {
+      "name": "barColor",
+      "type": "ordinal",
+      "domain": ["Charity runs registered"],
+      "range": ["#B8C4D6"]
+    }
+  ],
+
+  "axes": [
+    {
+      "orient": "bottom",
+      "scale": "x",
+      "title": "Year",
+      "labelFontSize": 12,
+      "titleFontSize": 12
+    },
+    {
+      "orient": "left",
+      "scale": "y",
+      "title": "Number of charity runs / deaths",
+      "grid": true,
+      "gridOpacity": 0.25,
+      "format": "d",
+      "tickCount": 10
+    }
+  ],
+
+  "legends": [
+    {
+      "fill": "barColor",
+      "title": "Bars",
+      "orient": "right",
+      "direction": "vertical",
+      "symbolType": "square",
+      "symbolSize": 120,
+      "symbolStrokeColor": "#8FA0BA",
+      "symbolStrokeWidth": 1,
+      "offset": 20,
+      "padding": 4,
+      "rowPadding": 6,
+      "titleFontSize": 12,
+      "titlePadding": 8,
+      "labelFontSize": 11,
+      "labelLimit": 240
+    },
+    {
+      "stroke": "color",
+      "fill": "color",
+      "title": "Lines: cause of death",
+      "orient": "right",
+      "direction": "vertical",
+      "symbolType": "stroke",
+      "symbolStrokeWidth": 3,
+      "symbolSize": 200,
+      "offset": 20,
+      "padding": 4,
+      "rowPadding": 8,
+      "titleFontSize": 12,
+      "titlePadding": 8,
+      "labelFontSize": 11,
+      "labelLimit": 240
+    }
+  ],
+
+  "marks": [
+    {
+      "type": "rect",
+      "name": "bars",
+      "from": {"data": "charity"},
+      "encode": {
+        "enter": {
+          "fill": {"value": "#B8C4D6"},
+          "stroke": {"value": "#8FA0BA"},
+          "strokeWidth": {"value": 1}
+        },
+        "update": {
+          "xc": {"scale": "x", "field": "year"},
+          "width": {"value": 90},
+          "y": {"scale": "y", "field": "runs"},
+          "y2": {"scale": "y", "value": 0},
+          "tooltip": {
+            "signal": "{'Year': datum.year, 'Charity runs registered': datum.runs}"
+          }
+        },
+        "hover": {"fill": {"value": "#9FB0C8"}}
+      }
+    },
+
+    {
+      "type": "text",
+      "from": {"data": "charity"},
+      "encode": {
+        "update": {
+          "x": {"scale": "x", "field": "year"},
+          "y": {"scale": "y", "field": "runs", "offset": -4},
+          "text": {"field": "runs"},
+          "align": {"value": "center"},
+          "baseline": {"value": "bottom"},
+          "fill": {"value": "#374151"},
+          "fontSize": {"value": 12}
+        }
+      }
+    },
+
+    {
+      "type": "group",
+      "from": {
+        "facet": {"name": "series", "data": "deaths", "groupby": "Disease"}
+      },
+      "marks": [
+        {
+          "type": "line",
+          "from": {"data": "series"},
+          "encode": {
+            "enter": {"strokeWidth": {"value": 3}},
+            "update": {
+              "x": {"scale": "x", "field": "year"},
+              "y": {"scale": "y", "field": "Deaths"},
+              "stroke": {"scale": "color", "field": "Disease"}
+            }
+          }
+        },
+        {
+          "type": "symbol",
+          "from": {"data": "series"},
+          "encode": {
+            "enter": {"size": {"value": 90}, "stroke": {"value": "white"}, "strokeWidth": {"value": 1.5}},
+            "update": {
+              "x": {"scale": "x", "field": "year"},
+              "y": {"scale": "y", "field": "Deaths"},
+              "fill": {"scale": "color", "field": "Disease"},
+              "tooltip": {
+                "signal": "{'Disease': datum.Disease, 'Year': datum.year, 'Deaths': format(datum.Deaths, ','), 'Rank': datum.Rank}"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

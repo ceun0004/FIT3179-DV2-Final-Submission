@@ -1,0 +1,222 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+
+  "width": 800,
+  "height": 450,
+
+  "background": "#CFE8F3",
+
+  "title": "Largest Running Races by Participation and Distance",
+
+  "projection": {
+    "type": "equalEarth"
+  },
+
+  "params": [
+    {
+      "name": "participation_filter",
+      "value": "All",
+      "bind": {
+        "input": "select",
+        "name": "Participants: ",
+        "options": [
+          "All",
+          "0–25,000",
+          "25,001–50,000",
+          "50,001–100,000",
+          "100,001–200,000"
+        ]
+      }
+    },
+    {
+      "name": "distance_filter",
+      "value": "All",
+      "bind": {
+        "input": "select",
+        "name": "Distance: ",
+        "options": [
+          "All",
+          "0–5 km",
+          "5.1–10 km",
+          "10.1–15 km",
+          "15.1–20 km",
+          "20.1–30 km",
+          "30.1–50 km"
+        ]
+      }
+    }
+  ],
+
+  "layer": [
+
+    {
+      "data": {
+        "url": "../topojson/ne_110m_admin_0_countries.topojson",
+        "format": {
+          "type": "topojson",
+          "feature": "ne_110m_admin_0_countries"
+        }
+      },
+
+      "mark": {
+        "type": "geoshape",
+        "fill": "#E8E2D2",
+        "stroke": "white"
+      }
+    },
+
+    {
+      "data": {
+        "values": [
+          {"name": "Pacific Ocean", "longitude": -150, "latitude": 5},
+          {"name": "Pacific Ocean", "longitude": 150, "latitude": 5},
+          {"name": "Atlantic Ocean", "longitude": -35, "latitude": 15},
+          {"name": "Indian Ocean", "longitude": 80, "latitude": -20},
+          {"name": "Southern Ocean", "longitude": 20, "latitude": -55},
+          {"name": "Arctic Ocean", "longitude": 20, "latitude": 75}
+        ]
+      },
+
+      "mark": {
+        "type": "text",
+        "fontSize": 11,
+        "fontStyle": "italic",
+        "color": "#557A8A",
+        "opacity": 0.8
+      },
+
+      "encoding": {
+        "longitude": {"field": "longitude", "type": "quantitative"},
+        "latitude": {"field": "latitude", "type": "quantitative"},
+        "text": {"field": "name", "type": "nominal"}
+      }
+    },
+
+    {
+      "data": {
+        "values": [
+          {"name": "North America", "longitude": -105, "latitude": 55},
+          {"name": "South America", "longitude": -60, "latitude": -15},
+          {"name": "Europe", "longitude": 21, "latitude": 44},
+          {"name": "Africa", "longitude": 20, "latitude": 5},
+          {"name": "Asia", "longitude": 95, "latitude": 40},
+          {"name": "Oceania", "longitude": 135, "latitude": -25}
+        ]
+      },
+
+      "mark": {
+        "type": "text",
+        "fontSize": 10,
+        "fontWeight": "bold",
+        "color": "#0e0e0e",
+        "opacity": 0.7
+      },
+
+      "encoding": {
+        "longitude": {"field": "longitude", "type": "quantitative"},
+        "latitude": {"field": "latitude", "type": "quantitative"},
+        "text": {"field": "name", "type": "nominal"}
+      }
+    },
+
+    {
+      "data": {
+        "url": "../data/Largest running races dataset.csv"
+      },
+
+      "transform": [
+        {
+          "calculate": "datum.Participation <= 25000 ? '0–25,000' : datum.Participation <= 50000 ? '25,001–50,000' : datum.Participation <= 100000 ? '50,001–100,000' : '100,001–200,000'",
+          "as": "Participation Range"
+        },
+
+        {
+          "calculate": "datum['Distance (km)'] <= 5 ? '0–5 km' : datum['Distance (km)'] <= 10 ? '5.1–10 km' : datum['Distance (km)'] <= 15 ? '10.1–15 km' : datum['Distance (km)'] <= 20 ? '15.1–20 km' : datum['Distance (km)'] <= 30 ? '20.1–30 km' : '30.1–50 km'",
+          "as": "Distance Range"
+        },
+
+        {
+          "filter": "(participation_filter === 'All' || datum['Participation Range'] === participation_filter) && (distance_filter === 'All' || datum['Distance Range'] === distance_filter)"
+        }
+      ],
+
+      "mark": {
+        "type": "circle",
+        "opacity": 0.7,
+        "stroke": "black",
+        "strokeWidth": 0.5
+      },
+
+      "encoding": {
+        "longitude": {"field": "Long", "type": "quantitative"},
+        "latitude": {"field": "Lat", "type": "quantitative"},
+
+        "size": {
+          "field": "Participation Range",
+          "type": "ordinal",
+          "title": "Participants",
+
+          "sort": [
+            "0–25,000",
+            "25,001–50,000",
+            "50,001–100,000",
+            "100,001–200,000"
+          ],
+
+          "scale": {
+            "domain": [
+              "0–25,000",
+              "25,001–50,000",
+              "50,001–100,000",
+              "100,001–200,000"
+            ],
+            "range": [20, 200, 900, 3500]
+          },
+
+          "legend": {
+            "title": "Participants"
+          }
+        },
+
+        "color": {
+          "field": "Distance Range",
+          "type": "ordinal",
+          "title": "Distance",
+
+          "sort": [
+            "0–5 km",
+            "5.1–10 km",
+            "10.1–15 km",
+            "15.1–20 km",
+            "20.1–30 km",
+            "30.1–50 km"
+          ],
+
+          "scale": {
+            "domain": [
+              "0–5 km",
+              "5.1–10 km",
+              "10.1–15 km",
+              "15.1–20 km",
+              "20.1–30 km",
+              "30.1–50 km"
+            ],
+            "scheme": "greens"
+          },
+
+          "legend": {
+            "title": "Distance (km)"
+          }
+        },
+
+        "tooltip": [
+          {"field": "Race", "type": "nominal", "title": "Race"},
+          {"field": "Participation", "type": "quantitative", "title": "Participants", "format": ",d"},
+          {"field": "Participation Range", "type": "nominal", "title": "Participation Range"},
+          {"field": "Distance (km)", "type": "quantitative", "title": "Distance (km)", "format": ".1f"},
+          {"field": "Distance Range", "type": "nominal", "title": "Distance Range"}
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,219 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "Hierarchical treemap of 2018 disease burden: disease group > disease/injury",
+  "width": 960,
+  "height": 640,
+  "padding": 5,
+  "autosize": "none",
+
+  "title": {
+    "text": "Burden of Disease in 2018 (Males + Females): Disease Group > Disease/Injury",
+    "anchor": "start",
+    "fontSize": 16
+  },
+
+  "data": [
+    {
+      "name": "table",
+      "url": "../data/AIHW Drivers of change in disease burden.csv",
+      "format": {"type": "csv"},
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum['Type of burden'] === 'DALY' && (datum.Sex === 'Females' || datum.Sex === 'Males')"
+        },
+        {
+          "type": "formula",
+          "expr": "toNumber(replace(datum['Burden 2018'], /,/g, ''))",
+          "as": "burden"
+        },
+        {
+          "type": "formula",
+          "expr": "datum.Sex === 'Females' ? datum.burden : 0",
+          "as": "female"
+        },
+        {
+          "type": "formula",
+          "expr": "datum.Sex === 'Males' ? datum.burden : 0",
+          "as": "male"
+        }
+      ]
+    },
+
+    {
+      "name": "diseases",
+      "source": "table",
+      "transform": [
+        {
+          "type": "aggregate",
+          "groupby": ["Disease group", "Disease/Injury"],
+          "ops": ["sum", "sum", "sum"],
+          "fields": ["burden", "female", "male"],
+          "as": ["size", "female", "male"]
+        },
+        {
+          "type": "formula",
+          "expr": "datum['Disease group'] + '|' + datum['Disease/Injury']",
+          "as": "id"
+        },
+        {"type": "formula", "expr": "datum['Disease group']", "as": "parent"},
+        {"type": "formula", "expr": "datum['Disease/Injury']", "as": "name"}
+      ]
+    },
+
+    {
+      "name": "groups",
+      "source": "table",
+      "transform": [
+        {
+          "type": "aggregate",
+          "groupby": ["Disease group"],
+          "ops": ["sum", "sum", "sum"],
+          "fields": ["burden", "female", "male"],
+          "as": ["groupTotal", "groupFemale", "groupMale"]
+        },
+        {"type": "formula", "expr": "datum['Disease group']", "as": "id"},
+        {"type": "formula", "expr": "'root'", "as": "parent"},
+        {"type": "formula", "expr": "datum['Disease group']", "as": "name"}
+      ]
+    },
+
+    {
+      "name": "rootnode",
+      "values": [{"id": "root", "parent": null, "name": "root"}]
+    },
+
+    {
+      "name": "tree",
+      "source": ["rootnode", "groups", "diseases"],
+      "transform": [
+        {"type": "stratify", "key": "id", "parentKey": "parent"},
+        {
+          "type": "treemap",
+          "field": "size",
+          "sort": {"field": "value", "order": "descending"},
+          "method": "squarify",
+          "ratio": 1.6,
+          "round": true,
+          "paddingInner": 1,
+          "paddingOuter": 3,
+          "size": [{"signal": "width"}, {"signal": "height"}]
+        }
+      ]
+    },
+
+    {
+      "name": "groupNodes",
+      "source": "tree",
+      "transform": [{"type": "filter", "expr": "datum.depth === 1"}]
+    },
+
+    {
+      "name": "leafNodes",
+      "source": "tree",
+      "transform": [{"type": "filter", "expr": "datum.depth === 2"}]
+    }
+  ],
+
+  "scales": [
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": {"data": "groups", "field": "id"},
+      "range": [
+        "#0072B2",
+        "#E69F00",
+        "#6A3D9A",
+        "#CC79A7",
+        "#56B4E9",
+        "#8C564B",
+        "#1B3A6B",
+        "#B35806",
+        "#7F7F7F",
+        "#9C6ADE",
+        "#4A4A4A",
+        "#C9A227"
+      ]
+    }
+  ],
+
+  "marks": [
+    {
+      "type": "rect",
+      "from": {"data": "groupNodes"},
+      "encode": {
+        "update": {
+          "x": {"field": "x0"},
+          "x2": {"field": "x1"},
+          "y": {"field": "y0"},
+          "y2": {"field": "y1"},
+          "fill": {"scale": "color", "field": "id"},
+          "fillOpacity": {"value": 0.25},
+          "stroke": {"scale": "color", "field": "id"},
+          "strokeWidth": {"value": 1.5}
+        }
+      }
+    },
+
+    {
+      "type": "rect",
+      "from": {"data": "leafNodes"},
+      "encode": {
+        "enter": {
+          "stroke": {"value": "white"},
+          "strokeWidth": {"value": 1}
+        },
+        "update": {
+          "x": {"field": "x0"},
+          "x2": {"field": "x1"},
+          "y": {"field": "y0"},
+          "y2": {"field": "y1"},
+          "fill": {"scale": "color", "field": "parent"},
+          "fillOpacity": {"value": 0.9},
+          "tooltip": {
+            "signal": "{'Disease group': datum.parent, 'Disease/Injury': datum.name, 'Total DALY': format(datum.size, ','), 'Females': format(datum.female, ','), 'Males': format(datum.male, ',')}"
+          }
+        },
+        "hover": {
+          "fillOpacity": {"value": 1},
+          "strokeWidth": {"value": 2}
+        }
+      }
+    },
+
+    {
+      "type": "text",
+      "from": {"data": "leafNodes"},
+      "encode": {
+        "update": {
+          "x": {"signal": "datum.x0 + 5"},
+          "y": {"signal": "datum.y0 + 4"},
+          "limit": {"signal": "max(datum.x1 - datum.x0 - 10, 0)"},
+          "text": {"field": "name"},
+          "align": {"value": "left"},
+          "baseline": {"value": "top"},
+          "fill": {"value": "white"},
+          "fontSize": {"value": 10},
+          "opacity": {"signal": "(datum.x1 - datum.x0) > 55 && (datum.y1 - datum.y0) > 24 ? 1 : 0"}
+        }
+      }
+    },
+
+    {
+      "type": "text",
+      "from": {"data": "leafNodes"},
+      "encode": {
+        "update": {
+          "x": {"signal": "datum.x0 + 5"},
+          "y": {"signal": "datum.y0 + 17"},
+          "text": {"signal": "format(datum.size, ',')"},
+          "align": {"value": "left"},
+          "baseline": {"value": "top"},
+          "fill": {"value": "white"},
+          "fontSize": {"value": 9},
+          "opacity": {"signal": "(datum.x1 - datum.x0) > 55 && (datum.y1 - datum.y0) > 38 ? 0.9 : 0"}
+        }
+      }
+    }
+  ]
+}

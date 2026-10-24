@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Community Fun Runs | Data Visualisation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Source+Serif+4:wght@400;600;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+
+<body>
+
+    <!-- ===== Navigation ===== -->
+    <header class="topnav">
+        <div class="topnav-inner">
+            <a class="brand" href="#top">Community <span>Fun Runs</span></a>
+            <nav>
+                <ul>
+                    <li><a href="#part-participation">Participation</a></li>
+                    <li><a href="#part-charity">Charity Runs</a></li>
+                    <li><a href="#part-health">Health Context</a></li>
+                    <li><a href="#references">References</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ===== Main title ===== -->
+    <section class="hero" id="top">
+        <div class="hero-inner">
+            <p class="eyebrow">Data Visualisation · Australia</p>
+            <h1>Community <em>Fun Runs</em></h1>
+            <p class="lead">
+                Fun runs, charity walks and outdoor community events across Australia:
+                who takes part, when events happen, and how they support healthier communities.
+            </p>
+
+            <div class="stat-strip">
+                <div class="stat"><strong>184,236</strong><span>runners in the world's largest event</span></div>
+                <div class="stat"><strong>5.2%</strong><span>average running participation rate</span></div>
+                <div class="stat"><strong>4,554</strong><span>winter charity runs, 2020–2025</span></div>
+                <div class="stat"><strong>$3.25B+</strong><span>charity event revenue across states</span></div>
+            </div>
+        </div>
+    </section>
+
+    <main>
+
+        <!-- ================= PART 1 ================= -->
+        <div class="part-header" id="part-participation">
+            <p class="part-label">Part 1</p>
+            <h2>Who runs, and where?</h2>
+            <p>Global event scale, then participation by state, age and gender.</p>
+        </div>
+
+        <!-- 1 -->
+        <section class="chapter" id="ch1">
+            <div class="chapter-head">
+                <p class="kicker">Proportional symbol map</p>
+                <h3><span class="num">1</span>World's Largest Running Events by Distance and Participation</h3>
+            </div>
+            <div class="chapter-body">
+                <div class="chart-card"><div id="vis1"></div></div>
+                <aside class="insight">
+                    <h4>Key insights</h4>
+                    <ul class="insights">
+                        <li><span class="hl-num">Wings for Life World Run</span> leads with <span class="hl-num">184,236</span> runners.</li>
+                        <li>The <span class="hl-place">United States</span> leads all countries in total participants.</li>
+                        <li><span class="hl-group">10 km races</span> draw the highest cumulative participation.</li>
+                        <li>The <span class="hl-group">marathon (42.2 km)</span> is the most listed distance.</li>
+                        <li><span class="hl-place">Philippines</span> hosts the second-largest race: <span class="hl-num">116,086</span> runners.</li>
+                    </ul>
+                </aside>
+            </div>
+        </section>
+
+        <!-- 2 -->
+        <section class="chapter flip" id="ch2">
+            <div class="chapter-head">
+                <p class="kicker">Choropleth map</p>
+                <h3><span class="num">2</span>AUSPLAY Running Participation Rates by State and Age (2025)</h3>
+            </div>
+            <div class="chapter-body">
+                <div class="chart-card"><div id="vis2"></div></div>
+                <aside class="insight">
+                    <h4>Key insights</h4>
+                    <ul class="insights">
+                        <li>Participation <span class="hl-warn">drops steadily</span> across older age groups.</li>
+                        <li><span class="hl-place">Victoria</span> has the top youth rate: <span class="hl-num">31.9%</span>.</li>
+                        <li><span class="hl-place">Northern Territory</span> peaks at ages 25–34: <span class="hl-num">31.3%</span>.</li>
+                        <li><span class="hl-place">NSW/ACT</span> peaks at ages 18–24: <span class="hl-num">30.45%</span>.</li>
+                        <li>Seniors aged <span class="hl-group">65+</span> fall below <span class="hl-warn">3%</span>.</li>
+                    </ul>
+                </aside>
+            </div>
+        </section>
+
+        <!-- 3 -->
+        <section class="chapter" id="ch3">
+            <div class="chapter-head">
+                <p class="kicker">Dumbbell chart</p>
+                <h3><span class="num">3</span>Running/Jogging Participation Rate: Female vs Male by State</h3>
+            </div>
+            <div class="chapter-body">
+                <div class="chart-card"><div id="vis3"></div></div>
+                <aside class="insight">
+                    <h4>Key insights</h4>
+                    <ul class="insights">
+                        <li><span class="hl-group">Males</span> lead females in almost every state.</li>
+                        <li><span class="hl-place">ACT</span> records the highest rates for both genders.</li>
+                        <li><span class="hl-place">SA</span> has the lowest female rate: <span class="hl-num">3.5%</span>.</li>
+                        <li><span class="hl-place">WA</span> is the only state with equal rates.</li>
+                        <li>Overall participation averages roughly <span class="hl-num">5.2%</span> across groups.</li>
+                    </ul>
+                </aside>
+            </div>
+        </section>
+
+        <!-- 4 -->
+        <section class="chapter flip" id="ch4">
+            <div class="chapter-head">
+                <p class="kicker">Radar chart</p>
+                <h3><span class="num">4</span>Top Eight Sports Participation Rates by Age Group</h3>
+            </div>
+            <div class="chapter-body">
+                <div class="chart-card"><div id="vis4"></div></div>
+                <aside class="insight">
+                    <h4>Key insights</h4>
+                    <ul class="insights">
+                        <li><span class="hl-group">Walking</span> is most popular, peaking at <span class="hl-num">66%</span>.</li>
+                        <li><span class="hl-group">Gym and fitness</span> dominate ages 18–24.</li>
+                        <li><span class="hl-group">Basketball</span> <span class="hl-warn">drops sharply</span> from youth to older ages.</li>
+                        <li><span class="hl-group">Golf</span> rises steadily into older age groups.</li>
+                        <li><span class="hl-group">Running and jogging</span> peak at ages <span class="hl-num">25–34</span>.</li>
+                    </ul>
+                </aside>
+            </div>
+        </section>
+
+        <!-- 5 -->
+        <section class="chapter" id="ch5">
+            <div class="chapter-head">
+                <p class="kicker">Dot map</p>
+                <h3><span class="num">5</span>Brisbane City Activity Events by Category (2026)</h3>
+            </div>
+            <div class="chapter-body">
+                <div class="chart-card"><div id="vis5"></div></div>
+                <aside class="insight">
+                    <h4>Category guide</h4>
+                    <ul class="insights">
+                        <li><span class="hl-num">Running/Jogging:</span> runs, parkruns, jogging and marathons.</li>
+                        <li><span class="hl-group">Arts &amp; Culture:</span> exhibitions, museums, music and theatre.</li>
+                        <li><span class="hl-group">Family &amp; Children:</span> storytime, playgroups and family events.</li>
+                        <li><span class="hl-group">Festivals &amp; Community:</span> festivals, markets and celebrations.</li>
+                        <li><span class="hl-group">Outdoor &amp; Recreation:</span> nature walks, gardens, fitness and sports.</li>
+                        <li><span class="hl-group">Others:</span> consultations, webinars and networking events.</li>
+                    </ul>
+                </aside>
+            </div>
+        </section>
+
+        <!-- ================= PART 2 ================= -->
+        <div class="part-header" id="part-charity">
+            <p class="part-label">Part 2</p>
+            <h2>When and where charity runs happen</h2>
+            <p>Monthly and seasonal timing of events, and the revenue they raise.</p>
+        </div>
+
+        <!-- 6 -->
+        <section class="chapter" id="ch6">
+            <div class="chapter-head">
+                <p class="kicker">Line chart</p>
+                <h3><span class="num">6</span>Monthly Charity Run Organizer Registrations by State (2020–2025)</h3>
+            </div>
+            <div class="chapter-body">
+                <div class="chart-card"><div id="vis6"></div></div>
+                <aside class="insight">
+                    <h4>Key insights</h4>
+                    <ul class="insights">
+                        <li><span class="hl-place">Victoria</span> peaked at <span class="hl-num">229</span> events in July 2023.</li>
+                        <li><span class="hl-place">NSW</span> followed with <span class="hl-num">206</span> events in July 2023.</li>
+                        <li>Most states <span class="hl-warn">surge sharply</span> around <span class="hl-group">July</span> each year.</li>
+                    </ul>
+                </aside>
+            </div>
+        </section>
+
+        <!-- 7 -->
+        <section class="chapter flip" id="ch7">
+            <div class="chapter-head">
+                <p class="kicker">Bar chart</p>
+                <h3><span class="num">7</span>Seasonal Distribution of Charity Runs by State (2020–2025)</h3>
+            </div>
+            <div class="chapter-body">
+                <div class="chart-card"><div id="vis7"></div></div>
+                <aside class="insight">
+                    <h4>Key insights</h4>
+                    <ul class="insights">
+                        <li><span class="hl-place">NSW</span> hosted the most charity runs in every season.</li>
+                        <li><span class="hl-place">NSW</span> hit a state record of <span class="hl-num">1,445</span> winter runs.</li>
+                        <li><span class="hl-place">NT</span> recorded a minimum of <span class="hl-num">37</span> autumn runs.</li>
+                        <li><span class="hl-group">Winter</span> leads all seasons with <span class="hl-num">4,554</span> events.</li>
+                    </ul>
+                </aside>
+            </div>
+        </section>
+
+        <!-- 8 -->
+        <section class="chapter" id="ch8">
+            <div class="chapter-head">
+                <p class="kicker">Lollipop chart</p>
+                <h3><span class="num">8</span>Charity Event Revenue by State</h3>
+            </div>
+            <div class="chapter-body">
+                <div class="chart-card"><div id="vis8"></div></div>
+                <aside class="insight">
+                    <h4>Key insights</h4>
+                    <ul class="insights">
+                        <li><span class="hl-place">ACT</span> generated the highest total revenue.</li>
+                        <li><span class="hl-place">WA</span> and <span class="hl-place">TAS</span> rank second and third.</li>
+                        <li><span class="hl-place">NT</span> recorded the <span class="hl-warn">lowest</span> revenue of all regions.</li>
+                        <li>Total revenue across eight states exceeds <span class="hl-num">$3.25 billion</span>.</li>
+                        <li>Average state revenue is roughly <span class="hl-num">$409.9 million</span>.</li>
+                    </ul>
+                </aside>
+            </div>
+        </section>
+
+        <!-- ================= PART 3 ================= -->
+        <div class="part-header" id="part-health">
+            <p class="part-label">Part 3</p>
+            <h2>The health context</h2>
+            <p>How charity run activity sits alongside chronic disease and health burden.</p>
+        </div>
+
+        <!-- 9 -->
+        <section class="chapter" id="ch9">
+            <div class="chapter-head">
+                <p class="kicker">Line &amp; bar chart</p>
+                <h3><span class="num">9</span>Charity Runs Registered vs Selected Causes of Death (2023–2024)</h3>
+            </div>
+            <div class="chapter-body">
+                <div class="chart-card"><div id="vis9"></div></div>
+                <aside class="insight">
+                    <h4>Key insights</h4>
+                    <ul class="insights">
+                        <li>Deaths from all three listed causes <span class="hl-warn">rose</span> in 2024.</li>
+                        <li><span class="hl-group">Chronic lower respiratory disease</span> was the leading cause.</li>
+                        <li>New charity registrations fell nearly <span class="hl-num">14%</span> from 2023 to 2024.</li>
+                        <li>An <span class="hl-warn">inverse trend</span> appears: registrations fell while deaths rose.</li>
+                    </ul>
+                    <p class="note">Two series moving in opposite directions show association, not causation.</p>
+                </aside>
+            </div>
+        </section>
+
+        <!-- 10 -->
+        <section class="chapter flip" id="ch10">
+            <div class="chapter-head">
+                <p class="kicker">Heat map</p>
+                <h3><span class="num">10</span>Long-Term Health Condition Prevalence by Australian State</h3>
+            </div>
+            <div class="chapter-body">
+                <div class="chart-card"><div id="vis10"></div></div>
+                <aside class="insight">
+                    <h4>Key insights</h4>
+                    <ul class="insights">
+                        <li><span class="hl-group">Mental conditions</span> are most prevalent nationwide: <span class="hl-num">26.1%</span>.</li>
+                        <li><span class="hl-place">Queensland</span> has the highest mental condition rate: <span class="hl-num">30.8%</span>.</li>
+                        <li><span class="hl-place">Tasmania</span> records the highest rates of multiple conditions.</li>
+                        <li><span class="hl-place">NT</span> shows the lowest arthritis prevalence: <span class="hl-num">11.2%</span>.</li>
+                        <li><span class="hl-group">Cancer, COPD and kidney disease</span> are least prevalent.</li>
+                    </ul>
+                </aside>
+            </div>
+        </section>
+
+        <!-- 11 -->
+        <section class="chapter" id="ch11">
+            <div class="chapter-head">
+                <p class="kicker">Tree map</p>
+                <h3><span class="num">11</span>Types of Diseases in Australia (2018)</h3>
+            </div>
+            <div class="chapter-body">
+                <div class="chart-card"><div id="vis11"></div></div>
+                <aside class="insight">
+                    <h4>Key insights</h4>
+                    <ul class="insights">
+                        <li><span class="hl-group">Cancer and neoplasms</span> carry the highest group burden.</li>
+                        <li><span class="hl-group">Cardiovascular diseases</span> exceed <span class="hl-num">550,000</span> DALYs.</li>
+                        <li><span class="hl-group">Coronary heart disease</span> is the leading single condition.</li>
+                        <li><span class="hl-group">Back pain</span> records a high burden: <span class="hl-num">222,357</span> DALYs.</li>
+                        <li><span class="hl-group">Oral disorders</span> form the smallest disease group.</li>
+                    </ul>
+                    <p class="note">DALY: disability-adjusted life year, a measure of disease burden.</p>
+                </aside>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== References & publisher ===== -->
+    <footer class="site-footer" id="references">
+        <div class="footer-inner">
+            <h2>Reference List</h2>
+            <ul class="references">
+                <li>ACNC registered charities - data.gov.au. (2026). <a href="https://data.gov.au/data/dataset/acnc-register" target="_blank" rel="noopener">https://data.gov.au/data/dataset/acnc-register</a></li>
+                <li>AIHW Australian Government, Australian Institute of Health and Welfare - aihw.gov.au. (2021). <a href="https://www.aihw.gov.au/reports/burden-of-disease/abds-2018-interactive-data-disease-burden/data" target="_blank" rel="noopener">https://www.aihw.gov.au/reports/burden-of-disease/abds-2018-interactive-data-disease-burden/data</a></li>
+                <li>Australia Charities and Not-for-profits Commission. (n.d.). <a href="https://www.acnc.gov.au/australian-charities-report-12th-edition-charity-data-explorer" target="_blank" rel="noopener">https://www.acnc.gov.au/australian-charities-report-12th-edition-charity-data-explorer</a></li>
+                <li>AusPlay results | Clearinghouse | ASC. (2025). <a href="https://www.ausport.gov.au/clearinghouse/research/ausplay/results" target="_blank" rel="noopener">https://www.ausport.gov.au/clearinghouse/research/ausplay/results</a></li>
+                <li>AusPlay results | Clearinghouse | ASC. (2026). <a href="https://www.ausport.gov.au/clearinghouse/research/ausplay/results" target="_blank" rel="noopener">https://www.ausport.gov.au/clearinghouse/research/ausplay/results</a></li>
+                <li>Brisbane City Council Events. (2026, October 23). <a href="https://data.brisbane.qld.gov.au/explore/dataset/brisbane-city-council-events/table/?utm_source=gemini&disjunctive.event_type&disjunctive.agerange&disjunctive.cost&disjunctive.location&disjunctive.activitytype&disjunctive.bookingsrequired&sort=-start_datetime&location=19,-27.45066,152.9821&basemap=jawg.streets" target="_blank" rel="noopener">https://data.brisbane.qld.gov.au/explore/dataset/brisbane-city-council-events/table/</a></li>
+                <li>Causes of Death, Australia, 2024. (2025). Australian Bureau of Statistics. <a href="https://www.abs.gov.au/statistics/health/causes-death/causes-death-australia/latest-release" target="_blank" rel="noopener">https://www.abs.gov.au/statistics/health/causes-death/causes-death-australia/latest-release</a></li>
+                <li>National Health Survey: State and territory findings, 2022. (2024). Australian Bureau of Statistics. <a href="https://www.abs.gov.au/statistics/health/health-conditions-and-risks/national-health-survey-state-and-territory-findings/latest-release#state-and-territory-findings" target="_blank" rel="noopener">https://www.abs.gov.au/statistics/health/health-conditions-and-risks/national-health-survey-state-and-territory-findings/latest-release</a></li>
+                <li>Power BI Report. (n.d.). <a href="https://app.powerbi.com/view?r=eyJrIjoiMzg2NTFmZGEtNGRhZC00Yzg2LWFjMjktNTViZTc2NDYwN2RiIiwidCI6IjhkMmUwZjRjLTU1ZjItNGNiMS04ZWU3LWRhNWRkM2ZmMzYwMCJ9" target="_blank" rel="noopener">https://app.powerbi.com/view?r=eyJrIjoiMzg2NTFmZGEtNGRhZC00Yzg2LWFjMjktNTViZTc2NDYwN2RiIiwidCI6IjhkMmUwZjRjLTU1ZjItNGNiMS04ZWU3LWRhNWRkM2ZmMzYwMCJ9</a></li>
+                <li>Wikipedia contributors. (2026). List of largest running events. <em>Wikipedia</em>. <a href="https://en.wikipedia.org/wiki/List_of_largest_running_events" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/List_of_largest_running_events</a></li>
+            </ul>
+
+            <div class="publish-bar">
+                <span>Published: 24 October 2026</span>
+                <span>Publisher: Eun Chi Wei (34598375)</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Chart specs live in the json folder.
+        const charts = [
+            { id: "vis1",  file: "json/proportional_symbol_graph.vg.json" },
+            { id: "vis2",  file: "json/choropleth_map.vg.json" },
+            { id: "vis3",  file: "json/dumbbell_graph.vg.json" },
+            { id: "vis4",  file: "json/radar_graph.vg.json" },
+            { id: "vis5",  file: "json/dot_map_graph.vg.json" },
+            { id: "vis6",  file: "json/line_chart.vg.json" },
+            { id: "vis7",  file: "json/mini_bar_chart.vg.json" },
+            { id: "vis8",  file: "json/lollipop_chart.vg.json" },
+            { id: "vis9",  file: "json/line & bar chart.vg.json" },
+            { id: "vis10", file: "json/heatmap.vg.json" },
+            { id: "vis11", file: "json/tree_map.vg.json" }
+        ];
+
+        const multiView = ["hconcat", "vconcat", "concat", "facet", "repeat"];
+
+        charts.forEach(function (c) {
+            const url = encodeURI(c.file);
+            fetch(url)
+                .then(function (r) { return r.json(); })
+                .then(function (spec) {
+                    // Make single-view Vega-Lite charts fill the shared chart width,
+                    // so every chart lines up. Multi-view and plain Vega specs are untouched.
+                    const isVegaLite = (spec.$schema || "").indexOf("vega-lite") !== -1;
+                    const isMulti = multiView.some(function (k) { return k in spec; });
+                    if (isVegaLite && !isMulti) {
+                        spec.width = "container";
+                        spec.autosize = { type: "fit", contains: "padding" };
+                    }
+                    return vegaEmbed("#" + c.id, spec, { actions: false });
+                })
+                .catch(function (err) {
+                    console.error(c.file, err);
+                    document.getElementById(c.id).innerHTML =
+                        '<p class="error">Could not load ' + c.file + '. Run the page from a local server (e.g. VS Code Live Server).</p>';
+                });
+        });
+    </script>
+
+</body>
+
+</html>

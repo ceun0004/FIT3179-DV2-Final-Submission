@@ -1,0 +1,61 @@
+Disease,ICD-10 Code,Year,Deaths,Rank
+Dementia, including Alzheimer's disease,"F01, F03, G30",2022,17113,2
+Dementia, including Alzheimer's disease,"F01, F03, G30",2023,16690,2
+Dementia, including Alzheimer's disease,"F01, F03, G30",2024,17550,1
+Ischaemic heart diseases,I20-I25,2022,18829,1
+Ischaemic heart diseases,I20-I25,2023,17093,1
+Ischaemic heart diseases,I20-I25,2024,16326,2
+Chronic lower respiratory diseases,J40-J47,2022,8611,6
+Chronic lower respiratory diseases,J40-J47,2023,8399,5
+Chronic lower respiratory diseases,J40-J47,2024,9239,3
+Cerebrovascular diseases,I60-I69,2022,9838,4
+Cerebrovascular diseases,I60-I69,2023,9382,3
+Cerebrovascular diseases,I60-I69,2024,9154,4
+Malignant neoplasm of trachea, bronchus and lung,"C33, C34",2022,9115,5
+Malignant neoplasm of trachea, bronchus and lung,"C33, C34",2023,8987,4
+Malignant neoplasm of trachea, bronchus and lung,"C33, C34",2024,9122,5
+Diabetes,E10-E14,2022,6080,7
+Diabetes,E10-E14,2023,5974,6
+Diabetes,E10-E14,2024,5989,6
+Malignant neoplasm of colon - sigmoid - rectum and anus,"C18-C21, C26.0",2022,5408,8
+Malignant neoplasm of colon - sigmoid - rectum and anus,"C18-C21, C26.0",2023,5492,7
+Malignant neoplasm of colon - sigmoid - rectum and anus,"C18-C21, C26.0",2024,5388,7
+Accidental falls including fractures,"W00-W19, X59.0",2022,5035,10
+Accidental falls including fractures,"W00-W19, X59.0",2023,4990,10
+Accidental falls including fractures,"W00-W19, X59.0",2024,5197,8
+Malignant neoplasms of lymphoid, haematopoietic and related tissue,C81-C96,2022,5172,9
+Malignant neoplasms of lymphoid, haematopoietic and related tissue,C81-C96,2023,5125,8
+Malignant neoplasms of lymphoid, haematopoietic and related tissue,C81-C96,2024,5168,9
+Diseases of the urinary system,N00-N39,2022,4573,11
+Diseases of the urinary system,N00-N39,2023,4541,11
+Diseases of the urinary system,N00-N39,2024,4812,10
+Heart failure and heart disease,I50-I51,2022,3941,12
+Heart failure and heart disease,I50-I51,2023,4054,12
+Heart failure and heart disease,I50-I51,2024,4267,11
+COVID-19,"U07.1-U07.2, U10.9",2022,9859,3
+COVID-19,"U07.1-U07.2, U10.9",2023,5009,9
+COVID-19,"U07.1-U07.2, U10.9",2024,4029,12
+Malignant neoplasm of pancreas,C25,2022,3702,14
+Malignant neoplasm of pancreas,C25,2023,3732,13
+Malignant neoplasm of pancreas,C25,2024,3874,13
+Malignant neoplasm of prostate,C61,2022,3804,13
+Malignant neoplasm of prostate,C61,2023,3727,14
+Malignant neoplasm of prostate,C61,2024,3836,14
+Influenza and pneumonia,J09-J18,2022,2779,18
+Influenza and pneumonia,J09-J18,2023,2912,17
+Influenza and pneumonia,J09-J18,2024,3672,15
+Intentional self-harm [suicide],"X60-X84, Y87.0",2022,3342,15
+Intentional self-harm [suicide],"X60-X84, Y87.0",2023,3311,15
+Intentional self-harm [suicide],"X60-X84, Y87.0",2024,3326,16
+Malignant neoplasms of breast,C50,2022,3160,16
+Malignant neoplasms of breast,C50,2023,3249,16
+Malignant neoplasms of breast,C50,2024,3204,17
+Hypertensive diseases,I10-I15,2022,2644,19
+Hypertensive diseases,I10-I15,2023,2703,19
+Hypertensive diseases,I10-I15,2024,2866,18
+Cardiac arrhythmias,I47-I49,2022,2794,17
+Cardiac arrhythmias,I47-I49,2023,2724,18
+Cardiac arrhythmias,I47-I49,2024,2674,19
+Cirrhosis and other diseases of liver,K70-K76,2022,2618,20
+Cirrhosis and other diseases of liver,K70-K76,2023,2580,20
+Cirrhosis and other diseases of liver,K70-K76,2024,2601,20
