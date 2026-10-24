@@ -40,7 +40,8 @@
           "field": "Female",
           "type": "quantitative",
           "title": "Participation rate (%)",
-          "scale": {"domain": [3, 9], "zero": false}
+          "scale": {"domain": [0, 9], "zero": true},
+          "axis": {"format": ".0f", "tickMinStep": 1}
         },
         "x2": {"field": "Male"},
         "tooltip": [
@@ -72,7 +73,7 @@
         "x": {
           "field": "Rate",
           "type": "quantitative",
-          "scale": {"domain": [3, 9], "zero": false}
+          "scale": {"domain": [0, 9], "zero": true}
         },
         "color": {
           "field": "Gender",
