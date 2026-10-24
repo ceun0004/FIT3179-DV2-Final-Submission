@@ -44,7 +44,7 @@
           "lookup": "State",
           "from": {
             "data": {
-              "url": "../topojson/australia_states.topojson",
+              "url": "topojson/australia_states.topojson",
               "format": {
                 "type": "topojson",
                 "feature": "ne_10m_admin_1_states_provinces"

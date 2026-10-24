@@ -121,7 +121,7 @@
 
     {
       "data": {
-        "url": "../data/Largest running races dataset.csv"
+        "url": "data/Largest running races dataset.csv"
       },
 
       "transform": [

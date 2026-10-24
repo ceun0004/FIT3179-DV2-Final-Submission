@@ -51,7 +51,7 @@
 
     {
       "data": {
-        "url": "../data/brisbane-city-council-events-categorized.csv"
+        "url": "data/brisbane-city-council-events-categorized.csv"
       },
 
       "transform": [
