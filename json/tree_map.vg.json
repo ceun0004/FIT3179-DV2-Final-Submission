@@ -15,7 +15,7 @@
   "data": [
     {
       "name": "table",
-      "url": "../data/AIHW Drivers of change in disease burden.csv",
+      "url": "data/AIHW Drivers of change in disease burden.csv",
       "format": {"type": "csv"},
       "transform": [
         {

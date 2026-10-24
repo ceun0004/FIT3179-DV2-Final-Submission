@@ -5,7 +5,7 @@
   "title": "Running/Jogging Participation Rate: Female vs Male by State",
 
   "data": {
-    "url": "../data/running-jogging_event by gender.csv",
+    "url": "data/running-jogging_event by gender.csv",
     "format": {"type": "csv"}
   },
 

@@ -87,7 +87,7 @@
     },
 
     {
-      "data": {"url": "../data/top_8_sports.csv", "format": {"type": "csv"}},
+      "data": {"url": "/data/top_8_sports.csv", "format": {"type": "csv"}},
       "transform": [
         {
           "filter": "age_filter === 'All' || datum['Age Group'] === age_filter"

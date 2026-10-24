@@ -5,7 +5,7 @@
   "title": "Charity Event Revenue by State",
 
   "data": {
-    "url": "../data/Charity_Revenue.csv",
+    "url": "data/Charity_Revenue.csv",
     "format": {"type": "csv"}
   },
 

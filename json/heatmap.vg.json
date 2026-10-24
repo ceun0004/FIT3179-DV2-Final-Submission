@@ -7,7 +7,7 @@
   "background": "#F9F9F9",
 
   "data": {
-    "url": "../data/Long_term_health_conditions_ABS.csv"
+    "url": "data/Long_term_health_conditions_ABS.csv"
   },
 
   "transform": [

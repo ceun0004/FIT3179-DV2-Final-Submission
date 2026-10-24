@@ -34,7 +34,7 @@
 
     {
       "data": {
-        "url": "../topojson/suburb-boundaries.topojson",
+        "url": "topojson/suburb-boundaries.topojson",
         "format": {
           "type": "topojson",
           "feature": "suburb-boundaries"
