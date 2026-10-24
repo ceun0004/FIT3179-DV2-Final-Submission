@@ -3,7 +3,7 @@
   "title": "Charity Run Organisers Registered per Month, by State (2020-2025)",
 
   "data": {
-    "url": "../data/charity_fun_run_datadotgov_main.csv",
+    "url": "data/charity_fun_run_datadotgov_main.csv",
     "format": {"type": "csv"}
   },
 
