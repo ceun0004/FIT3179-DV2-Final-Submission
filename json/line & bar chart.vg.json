@@ -42,7 +42,7 @@
 
     {
       "name": "deaths",
-      "url": "../data/leading causes of death, Australia.csv",
+      "url": "data/leading causes of death, Australia.csv",
       "format": {"type": "csv", "parse": {"Deaths": "number", "Rank": "number"}},
       "transform": [
         {

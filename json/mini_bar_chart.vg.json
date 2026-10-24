@@ -1,19 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Charity Run Organisers by State and Season",
-
-  "params": [
-    {
-      "name": "start_year",
-      "value": 2020,
-      "bind": {"input": "range", "min": 2020, "max": 2025, "step": 1, "name": "From year: "}
-    },
-    {
-      "name": "end_year",
-      "value": 2025,
-      "bind": {"input": "range", "min": 2020, "max": 2025, "step": 1, "name": "To year: "}
-    }
-  ],
+  "title": "Charity Run Organisers by State and Season (2020-2025)",
 
   "data": {
     "url": "data/charity_fun_run_datadotgov_main.csv",
@@ -30,9 +17,6 @@
     },
     {
       "filter": "year(datum.reg_date) >= 2020 && year(datum.reg_date) <= 2025"
-    },
-    {
-      "filter": "year(datum.reg_date) >= start_year && year(datum.reg_date) <= end_year"
     },
     {
       "calculate": "(month(datum.reg_date) === 11 || month(datum.reg_date) <= 1) ? 'Summer (Dec–Feb)' : month(datum.reg_date) <= 4 ? 'Autumn (Mar–May)' : month(datum.reg_date) <= 7 ? 'Winter (Jun–Aug)' : 'Spring (Sep–Nov)'",
